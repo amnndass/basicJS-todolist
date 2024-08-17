@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body class="bg-gradient-to-r from-slate-500 to-slate-800">
+    <div id="card" class="w-[476px] mt-[100px] mb-9 mx-auto bg-slate-200 rounded-3xl px-[30px] py-[13px]">
+        <div id="heading" class="font-sans text-xl py-5 font-bold">
+            <span>To-Do List</span>
+            <img src="" alt="">
+        </div>
+
+        <div id="feild" class="w-fit flex justify-between">
+            <input type="text" name="" id="inputTask" placeholder="Add your task" class="px-[80px] rounded-3xl pl-4">
+            <button id="button" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-[15px] text-center me-2 mb-2 mt-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 ml-8">Add</button>
+        </div>
+
+        <div id="tasks" class="text-lg font-sans ">
+            <ul class="space-y-1 text-lg border border-2  rounded-lg p-5" id="ul">
+                <!-- <li class="flex justify-between"> 
+                  <div class="h-full w-full flex">
+                    <h1 class="h-[10px] w-[10px] bg-red-600 rounded my-auto active:bg-green-400">  </h1>
+                    <span class="text-gray-800 dark:text-gray-400 cursor-pointer ml-3 " id="todotask">List Item 1</span>
+                    <div class="controls ml-auto flex">
+                        <img src="assets/undo.png" alt="" class="size-5 mr-3 hidden">
+                        <img src="assets/remove.png" class="size-5   mr-5" alt="" id="delete">
+                        
+                    </div>
+                  </div>
+                   
+                    
+                  
+                </li> -->
+              
+                
+            </ul>
+        </div>
+
+
+
+        
+    </div>
+
+    
+
+
+</body>
+
+<script>
+    const task = document.getElementById("inputTask")
+    const button = document.getElementById("button")
+
+
+    button.addEventListener("click", () => {
+        if(task.value == ''){
+            alert("enter text")
+        }else{
+            createLiElement()
+        }
+
+        
+    })
+
+
+    function createLiElement(){
+        //getting the value form the input feild
+        const value = task.value
+        //logging the value
+        console.log(value)
+
+        //trying to make a html li element and giving it the properties for the readymade li and appending it 
+        //with the ul
+        const list = document.getElementById("ul")
+        const li = document.createElement('li')
+        li.className = 'flex space-x-3'
+
+        
+
+        //creating master div
+        const div = document.createElement('div')
+        div.className = "h-full w-full flex"
+
+        //creating dot
+        const dot = document.createElement('h1');
+        dot.className = "h-[10px] w-[10px] bg-red-600 rounded my-auto active:bg-green-400"
+
+        // Create the <span> element
+        const span = document.createElement('span');
+        span.className = 'text-gray-800 dark:text-gray-400 cursor-pointer ml-3';
+        span.textContent = value;
+        span.id = 'todotask'
+
+        //create child div
+        const childDiv = document.createElement('div');
+        childDiv.className = 'controls ml-auto flex'
+
+        //create the delete icon image
+        const image = document.createElement('img')
+        image.src = "assets/remove.png"
+        image.className = "size-5   mr-5"
+        image.id = "delete"
+
+        // create the undo icon image
+        const undoIcon = document.createElement('img');
+        undoIcon.id = 'undoIcon'
+        undoIcon.src = 'assets/undo.png'
+        undoIcon.className = 'size-5 mr-3 hidden'
+
+        //appending deleteicon and undo icon to childdiv
+        childDiv.appendChild(undoIcon)
+        childDiv.appendChild(image)
+
+
+        //appending the elements with div
+        div.appendChild(dot)
+        div.appendChild(span)
+        div.appendChild(childDiv)
+
+        //creating a new li(task) by appending dot and text to the ul
+        //li.appendChild(dot)
+        li.appendChild(div)
+        //li.textContent = value
+        list.appendChild(li)
+
+
+        task.value = ""
+    }
+
+    //adding functionality to list items 
+    //clicking on text makes it strike through text
+    //clicking on delete img deletes the li tag
+    document.getElementById("ul").addEventListener("click", function(e){
+        console.log(e);
+        console.log(e.target.id);
+        const text = e.target
+        
+
+        if(e.target.id == 'todotask'){
+            
+            text.className = "line-through text-gray-800 dark:text-gray-400 cursor-pointer ml-3 "
+            e.target.parentElement.childNodes[2].childNodes[0].className = 'size-5 mr-3'
+            
+            
+            
+
+        } else if (e.target.id == 'delete'){
+            const removeIt = e.target.parentElement.parentElement
+            removeIt.remove()
+        } else if (e.target.tagName == "h1"){
+
+        } else if (e.target.id == 'undoIcon'){
+            // const newtext = e.
+            //text.className = "text-gray-800 dark:text-gray-400 cursor-pointer ml-3 "
+            console.log(e.target);
+
+            
+            
+            
+            e.target.parentElement.parentElement.childNodes[1].className = 'text-gray-800 dark:text-gray-400 cursor-pointer ml-3'
+            e.target.className = 'size-5 mr-3 hidden'
+        }
+
+        
+        
+    })
+
+
+
+
+// //creating the svg
+        // const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+        // svg.className = "flex-shrink-0 h-6 w-6 text-blue-600"
+        // svg.setAttribute("width", "16")
+        // svg.setAttribute("height" , "16")
+        // svg.setAttribute("height" , "16")
+        // svg.setAttribute("viewBox" , "0 0 16 16")
+        // svg.setAttribute("fill" , "none")
+        // svg.setAttribute("xmlns" , "http://www.w3.org/2000/svg")
+        
+        // //creating path clild for svg
+        // const path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+        // path.setAttribute("d", "M11.5219 4.0949C11.7604 3.81436 12.181 3.78025 12.4617 4.01871C12.7422 4.25717 12.7763 4.6779 12.5378 4.95844L6.87116 11.6251C6.62896 11.91 6.1998 11.94 5.9203 11.6916L2.9203 9.02494C2.64511 8.78033 2.62032 8.35894 2.86493 8.08375C3.10955 7.80856 3.53092 7.78378 3.80611 8.02839L6.29667 10.2423L11.5219 4.0949Z")
+        // path.setAttribute("fill" , "currentColor")
+        // svg.appendChild(path)
+</script>
+
+</html>
+
+
